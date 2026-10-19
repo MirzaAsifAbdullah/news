@@ -20,9 +20,9 @@ const Navbar = async() => {
 
     return (
        
-        <div className='flex items-center justify-center gap-5 py-3 text-lg font-semibold text-gray-700'>
-            <Link href={"/"} >হোম</Link>
-            {filteredNavs.map((n,i)=><Link key={i} href={`/category/${n.slug}`} >{n.title}</Link>)}
+        <div className='flex flex-wrap items-center justify-center gap-3 py-3 text-sm md:text-lg font-semibold text-gray-700'>
+            <Link href={"/"} className="whitespace-nowrap">হোম</Link>
+            {filteredNavs.map((n,i)=><Link key={i} href={`/category/${n.slug}`} className="whitespace-nowrap">{n.title}</Link>)}
         </div>    );
 };
 

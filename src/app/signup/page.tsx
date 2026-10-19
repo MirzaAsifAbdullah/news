@@ -3,6 +3,7 @@
 
 import { authClient } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
+import { toast } from "react-toastify";
 import React from "react";
 
 const Signup = () => {
@@ -19,18 +20,20 @@ const Signup = () => {
 
     if (data) {
       console.log(data);
+      toast.success("Account created successfully");
       redirect("/");
     }
 
     if (error) {
       console.log(error);
+      toast.error(error.message || "Sign up failed");
     }
   };
 
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+        <fieldset className="fieldset w-full sm:w-xs bg-base-200 border-base-300 rounded-box border p-4 sm:p-6">
           <legend className="fieldset-legend">
             Sign Up
           </legend>

@@ -31,16 +31,16 @@ export default async function Home() {
     <div >
       
 
-      <div className="grid grid-cols-3 gap-4  max-w-7xl mx-auto mt-5 px-4">
+      <div className="grid gap-4 max-w-7xl mx-auto mt-5 px-4 md:grid-cols-3">
   {/* main news */}
-  <div className="col-span-2 ">
+  <div className="md:col-span-2">
     <MainNews news={mainNews} />
   
   
    <div   >
     {otherNews.map(os => <div className="" key={os.curationId}>
       <h1 className="font-bold mt-5  border-b-2 border-gray-700 py-2">{os.title}</h1>
-     <div className="grid grid-cols-3 gap-4 mt-2">
+     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
       {os.articles.map(news => <NewsCard key={news.id} news={news} />)}
      </div>
     </div>)}
@@ -50,7 +50,7 @@ export default async function Home() {
  
 
   {/* side news */}
-  <div className="col-span-1" >
+  <div className="md:col-span-1">
     <MostRead />
   </div>
 </div>
