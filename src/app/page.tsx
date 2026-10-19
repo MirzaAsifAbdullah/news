@@ -22,11 +22,27 @@ export default async function Home() {
   const res = await fetch("https://news-api-v2.vercel.app/api/news/sections");
   const data = await res.json();
   const sections = data.data;
-  const mainNews= sections[0].articles;
 
-  const otherNews: IotherNews[] = sections.slice(1);
+  // Filter out media/social media sections (WhatsApp, Instagram, Facebook, etc.)
+  const mediaKeywords = [
+    'whatsapp', 'হোয়াটসঅ্যাপ', 'হ vọngসঅ্যাপ',
+    'instagram', 'ইন্সটাগ্রাম', 'ইন্সটাগ্রামে',
+    'facebook', 'ফেসবুক',
+    'twitter', 'টুইটার',
+    'telegram', 'টেলিগ্রাম',
+    'youtube', 'ইউটিউব',
+    'সামাজিক মাধ্যমে', 'social media',
+  ];
+
+  const filteredSections = sections.filter((section: any) => {
+    const title = section.title?.toLowerCase() || '';
+    return !mediaKeywords.some(keyword => title.includes(keyword.toLowerCase()));
+  });
+
+  const mainNews = filteredSections[0]?.articles || [];
+  const otherNews: IotherNews[] = filteredSections.slice(1);
+
   console.log(otherNews);
-  // console.log(mainNews);
   return (
     <div >
       
