@@ -6,6 +6,7 @@ import AuthButtons from "./AuthButtons";
 
 const Header = () => {
   const date = new Date().toLocaleDateString("bn-BD", {
+    timeZone: "Asia/Dhaka",
     dateStyle: "full",
   });
 
