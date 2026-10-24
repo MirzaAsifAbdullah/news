@@ -8,15 +8,24 @@ interface INews {
 }
 const MostRead = async () => {
 
-    const res = await fetch("https://news-api-v2.vercel.app/api/news/most-read");
-    const data = await res.json();
-    const mostRead: INews[] = data.data;
+    const res = await fetch("https://news-api-v2.vercel.app/api/news/most-read", {
+      cache: "no-store",
+    });
+
+    let mostRead: INews[] = [];
+    try {
+      const data = await res.json();
+      mostRead = Array.isArray(data?.data) ? data.data : [];
+    } catch {
+      mostRead = [];
+    }
+
     return (
         <div className="card bg-gray-100 p-4 rounded-lg shadow-md">
             <h1 className="text-xl font-bold mb-4">সর্বাধিক পঠিত</h1>
 
             <div>
-                {mostRead.map((news,index) =><Link
+                {mostRead.map((news, index) => <Link
   key={news.id}
   href={`/news/${news.id}`}
   target="_blank"

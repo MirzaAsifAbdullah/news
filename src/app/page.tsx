@@ -19,9 +19,21 @@ interface IotherNews {
 
 export default async function Home() {
 
-  const res = await fetch("https://news-api-v2.vercel.app/api/news/sections");
-  const data = await res.json();
-  const sections = data.data;
+  const res = await fetch("https://news-api-v2.vercel.app/api/news/sections", {
+    cache: "no-store",
+  });
+
+  let sections: any[] = [];
+  try {
+    const data = await res.json();
+    sections = Array.isArray(data?.data) ? data.data : [];
+  } catch {
+    sections = [];
+  }
+
+  if (!res.ok) {
+    sections = [];
+  }
 
   // Filter out media/social media sections (WhatsApp, Instagram, Facebook, etc.)
   const mediaKeywords = [
@@ -35,7 +47,7 @@ export default async function Home() {
   ];
 
   const filteredSections = sections.filter((section: any) => {
-    const title = section.title?.toLowerCase() || '';
+    const title = section?.title?.toLowerCase() || '';
     return !mediaKeywords.some(keyword => title.includes(keyword.toLowerCase()));
   });
 

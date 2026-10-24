@@ -76,7 +76,7 @@ const NewsDetails = async ({
               </span>
 
               <span className="text-sm text-gray-500">
-                {new Date(news.firstPublished).toLocaleDateString()}
+                {news.firstPublished ? new Date(news.firstPublished).toLocaleDateString() : "-"}
               </span>
             </div>
 

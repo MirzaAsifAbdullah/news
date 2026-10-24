@@ -3,16 +3,20 @@
 import { useSession, signOut } from "@/lib/auth-client";
 import Link from "next/link";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 
 export default function AuthButtons() {
   const { data } = useSession();
-  const router = useRouter();
 
-  const handleLogout = async () => {
-    await signOut({ callbackURL: "/" });
-    toast.success("Logged out successfully");
-    router.refresh();
+  const handleLogout = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      await signOut({ callbackURL: "/" });
+      toast.success("Logged out successfully");
+    } catch (error) {
+      toast.error("Logout failed");
+    }
+    window.location.href = "/";
   };
 
   if (data?.user) {
@@ -47,12 +51,12 @@ export default function AuthButtons() {
           <li><a className="justify-between">প্রোফাইল</a></li>
           <li><hr /></li>
           <li>
-            <a
+            <button
               onClick={handleLogout}
-              className="justify-between text-red-600 font-semibold hover:bg-red-50 rounded-lg"
+              className="w-full justify-between text-red-600 font-semibold hover:bg-red-50 rounded-lg text-left px-2 py-2"
             >
               লগআউট
-            </a>
+            </button>
           </li>
         </ul>
       </div>
